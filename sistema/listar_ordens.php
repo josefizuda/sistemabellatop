@@ -151,9 +151,9 @@ $result = mysqli_query($conn, $query);
      autoclose: true
    });
 
-    load_data();
+    fetch_data('no');
 
-    function fetch_data(is_date_search, start_date='', end_date='', is_category)
+    function fetch_data(is_date_search, start_date='', end_date='')
     {
       var dataTable = $('#tabela').DataTable({
         "oLanguage": {
@@ -191,15 +191,16 @@ $result = mysqli_query($conn, $query);
          "orderable":false,
        },
        ],
+       "deferRender": true,
        "ajax" : {
          url:"proc_pesq_ordens.php",
          type:"POST",
-         data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date, is_category:is_category
+         data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date
          },
-       },   
-
-      "footerCallback": function ( row, data, start, end, display ) {
-       var api = this.api(), data;
+       },
+       //initial callback
+       "footerCallback": function ( row, data, start, end, display ) {
+         var api = this.api(), data;
 
                // Remove the formatting to get integer data for summation
                var intVal = function ( i ) {
@@ -273,22 +274,22 @@ $result = mysqli_query($conn, $query);
                  );
                }//end footer callback
              });
-}
+    }
 
-$('#search').click(function(){
-  var start_date = $('#start_date').val();
-  var end_date = $('#end_date').val();
-  if(start_date != '' && end_date !='')
-  {
-   $('#tabela').DataTable().destroy();
-   fetch_data('yes', start_date, end_date);
- }
- else
- {
-   alert("Por Favor selecione uma data");
- }
-}); 
-});
+    $('#search').click(function(){
+      var start_date = $('#start_date').val();
+      var end_date = $('#end_date').val();
+      if(start_date != '' && end_date !='')
+      {
+       $('#tabela').DataTable().destroy();
+       fetch_data('yes', start_date, end_date);
+     }
+     else
+     {
+       alert("Por Favor selecione uma data");
+     }
+   }); 
+  });
 </script>
 </div>
 <!-- END DATA TABLE -->

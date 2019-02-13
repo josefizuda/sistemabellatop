@@ -4,7 +4,7 @@ include("class/conexao.php");
 $conn = new mysqli($host, $usuario, $senha, $bd);
 
 if(!isset($_SESSION))
-//se nao existir uma sessao ativa, crie-a
+                   //se nao existir uma sessao ativa, crie-a
  session_start();
 
 //colunas
@@ -32,15 +32,10 @@ $sql = "SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, orde
             LEFT JOIN provider ON provider.provider_id = emitir_ordem.cod_provider
             LEFT JOIN order_marcas ON order_marcas.marcas_id = emitir_ordem.cod_marcas
             LEFT JOIN order_size ON order_size.size_id = emitir_ordem.cod_size
-            LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status WHERE";
+            LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status WHERE 1=1";
 
 $resultado_user =mysqli_query($conn,$sql) or trigger_error(mysqli_error($conn));
-$qnt_linhas = mysqli_num_rows($resultado_user);
-
-if(isset($_POST["is_category"]))
-{
- $query .= "product.category = '".$_POST["is_category"]."' AND ";
-}                     
+$qnt_linhas = mysqli_num_rows($resultado_user);                     
 //is date
 if($_POST["is_date_search"] == "yes")
 {
@@ -125,6 +120,10 @@ $sub_array[]='<a href="editar_ordem.php?id='.$row['emit_id'].'" class="btn btn-s
 
 }   
  }
+
+
+
+
 
 
 function get_all_data($conn)
