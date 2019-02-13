@@ -143,20 +143,20 @@ $result = mysqli_query($conn, $query);
 
 <!-- script datepicker e datatable -->
 <script type="text/javascript" language="javascript" >
-  $(document).ready(function(){
-
-    $('.input-daterange').datepicker({  
+$(document).ready(function(){
+  
+  $('.input-daterange').datepicker({  
      todayBtn:'linked',
      format: "yyyy-mm-dd",
      autoclose: true
    });
+ 
+ load_data();
 
-    fetch_data('no');
-
-    function fetch_data(is_date_search, start_date='', end_date='')
-    {
-      var dataTable = $('#tabela').DataTable({
-        "oLanguage": {
+ function load_data(is_date_search, start_date='', end_date='', is_category )
+ {
+  var dataTable = $('#tabela').DataTable({
+   "oLanguage": {
 
          "sInfo": "EXIBINDO _START_ DE _END_ - TOTAL: _TOTAL_",
          "sProcessing":   "PESQUISANDO...",
@@ -178,26 +178,26 @@ $result = mysqli_query($conn, $query);
          }    
 
        },
-
-       "processing" : true,
-       "serverSide" : true,
-       "order" : [],
-       dom: 'lBfrtip',
-       "buttons": ['print', 'pdf'],
-       "columnDefs":[
+    
+   "processing":true,
+   "serverSide":true,
+   "order":[],
+   dom: 'lBfrtip',
+   "buttons": ['print', 'pdf'],
+   "columnDefs":[
        {
          "targets":[1,8],
          "orderable":false,
        },
        ],
-       "deferRender": true,
-       "ajax" : {
-         url:"proc_pesq_ordens.php",
-         type:"POST",
-         data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date
+   "deferRender": true, 
+   "ajax":{
+    url:"proc_pesq_ordens.php",
+    type:"POST",
+    data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date, is_category:is_category
          },
        },
-       //initial callback
+   //initial callback
        "footerCallback": function ( row, data, start, end, display ) {
          var api = this.api(), data;
 
@@ -272,10 +272,24 @@ $result = mysqli_query($conn, $query);
                  'Total: <div style="color: #37692e;">'+pageTotal +'</div> peças'
                  );
                }//end footer callback
-             });
-    }
+    
+  });
+ }
 
-    $('#search').click(function(){
+ $(document).on('change', '#category', function(){
+  var category = $(this).val();
+  $('#tabela').DataTable().destroy();
+  if(category != '')
+  {
+   load_data(category);
+  }
+  else
+  {
+   load_data();
+  }
+ });
+  
+$('#search').click(function(){
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
       if(start_date != '' && end_date !='')
@@ -287,8 +301,10 @@ $result = mysqli_query($conn, $query);
      {
        alert("Por Favor selecione uma data");
      }
-   }); 
-  });
+   });   
+  
+  
+});
 </script>
 </div>
 <!-- END DATA TABLE -->

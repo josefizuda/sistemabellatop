@@ -18,6 +18,23 @@ $columns = array(
 'emitir_ordem.qtysaldo', 
 'order_status.status');
 
+$queryselect = "
+ SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, order_size.size, order_sign, emitir_ordem.qtyentry, emitir_ordem.qtyexit, emitir_ordem.qtysaldo, order_status.status FROM emitir_ordem 
+ INNER JOIN provider 
+ ON provider.provider_id = emitir_ordem.cod_provider 
+";
+
+$queryselect .= " WHERE ";
+if(isset($_POST["is_category"]))
+{
+ $queryselect .= "emitir_ordem.cod_provider = '".$_POST["is_category"]."' AND ";
+}
+if(isset($_POST["search"]["value"]))
+{
+ $queryselect .= '(emitir_ordem.emit_id LIKE "%'.$_POST["search"]["value"].'%" ';
+ $queryselect .= 'OR provider.name_pr LIKE "%'.$_POST["search"]["value"].'%" ';
+}
+
 //query
 $query = "SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, order_size.size, order_sign, emitir_ordem.qtyentry, emitir_ordem.qtyexit, emitir_ordem.qtysaldo, order_status.status FROM emitir_ordem 
             LEFT JOIN user ON user.id_user = emitir_ordem.cod_user
@@ -105,7 +122,7 @@ $sub_array[] = $row["qtyexit"];
 $sub_array[] = $saldo;
 $sub_array[] = $row["status"];
 $sub_array[]='<a href="editar_ordem.php?id='.$row['emit_id'].'" class="btn btn-success"><i class="glyphicon glyphicon-pencil">&nbsp;</i>BAIXAR</a><br>';
- $data[] = $sub_array;
+$data[] = $sub_array;
 
 }   
  }
@@ -117,7 +134,7 @@ function get_all_data($conn)
             LEFT JOIN provider ON provider.provider_id = emitir_ordem.cod_provider
             LEFT JOIN order_marcas ON order_marcas.marcas_id = emitir_ordem.cod_marcas
             LEFT JOIN order_size ON order_size.size_id = emitir_ordem.cod_size
-            LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status ";
+            LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status";
  $resultado_usuarios=mysqli_query($conn, $query);
  return mysqli_num_rows($resultado_usuarios);
 }
