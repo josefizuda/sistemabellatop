@@ -25,17 +25,7 @@ $query = "SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, or
             LEFT JOIN order_marcas ON order_marcas.marcas_id = emitir_ordem.cod_marcas
             LEFT JOIN order_size ON order_size.size_id = emitir_ordem.cod_size
             LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status WHERE ";
-
-//Obtendo registros de número total sem qualquer pesquisa
-$sql = "SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, order_size.size, emitir_ordem.order_sign, emitir_ordem.qtyentry, emitir_ordem.qtyexit, emitir_ordem.qtysaldo, order_status.status FROM emitir_ordem 
-            LEFT JOIN user ON user.id_user = emitir_ordem.cod_user
-            LEFT JOIN provider ON provider.provider_id = emitir_ordem.cod_provider
-            LEFT JOIN order_marcas ON order_marcas.marcas_id = emitir_ordem.cod_marcas
-            LEFT JOIN order_size ON order_size.size_id = emitir_ordem.cod_size
-            LEFT JOIN order_status ON order_status.order_status_id = emitir_ordem.cod_order_status WHERE 1=1";
-
-$resultado_user =mysqli_query($conn,$sql) or trigger_error(mysqli_error($conn));
-$qnt_linhas = mysqli_num_rows($resultado_user);                     
+                     
 //is date
 if($_POST["is_date_search"] == "yes")
 {
@@ -140,7 +130,7 @@ function get_all_data($conn)
 
 $output = array(
  "draw"    => intval($_POST["draw"]),
- "recordsTotal"  =>  intval( $qnt_linhas ),
+ "recordsTotal"  =>  intval( $totalFiltered ),
  "recordsFiltered" => intval( $totalFiltered ),
  "data"    => $data
 );
