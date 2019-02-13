@@ -71,7 +71,6 @@ $result = mysqli_query($conn, $query . $query1);
 
 $data = array();
 
- 
    if ($_SESSION['acess_level'] == 2) {
     while($row = mysqli_fetch_array($result))
 {
@@ -111,11 +110,6 @@ $sub_array[]='<a href="editar_ordem.php?id='.$row['emit_id'].'" class="btn btn-s
 }   
  }
 
-
-
-
-
-
 function get_all_data($conn)
 {
  $query = "SELECT emitir_ordem.emit_id, provider.name_pr, order_marcas.marcas, order_size.size, emitir_ordem.order_sign, emitir_ordem.qtyentry, emitir_ordem.qtyexit, emitir_ordem.qtysaldo, order_status.status FROM emitir_ordem 
@@ -130,8 +124,8 @@ function get_all_data($conn)
 
 $output = array(
  "draw"    => intval($_POST["draw"]),
- "recordsTotal"  =>  intval( $totalFiltered ),
- "recordsFiltered" => intval( $totalFiltered ),
+ "recordsTotal"  =>  get_all_data($conn),
+ "recordsFiltered" => $totalFiltered,
  "data"    => $data
 );
 
