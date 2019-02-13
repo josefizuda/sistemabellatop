@@ -159,7 +159,6 @@ $result = mysqli_query($conn, $query);
         "oLanguage": {
 
          "sInfo": "EXIBINDO _START_ DE _END_ - TOTAL: _TOTAL_",
-         "sInfoEmpty": "Tabela vazia",
          "sProcessing":   "PESQUISANDO...",
          "sLengthMenu":   "Mostrar _MENU_ registros",
          "sZeroRecords":  "Não foram encontrados resultados",
