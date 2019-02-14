@@ -88,8 +88,21 @@ $result = mysqli_query($conn, $query);
      <div class="col-md-4">
       <input type="button" name="search" id="search" value="Pesquisar" class="btn btn-info" />
     </div>
+
   </div>
-  <br />
+    <br />
+  <div class="col-md-4">
+  <select name="category" id="category" class="form-control">
+           <option value="">Prestador</option>
+           <?php 
+           while($row = mysqli_fetch_array($result))
+           {
+            echo '<option value="'.$row["provider_id"].'">'.$row["name_pr"].'</option>';
+          }
+          ?>
+        </select>
+      </div>
+  <br />  <br />
   <div class="col-md-12">
 
     <div class="table-responsive m-b-40">
@@ -99,17 +112,7 @@ $result = mysqli_query($conn, $query);
        <thead>
         <tr>
          <th nowrap="nowrap" width="5%"> Codigo</th>
-         <th>
-          <select name="category" id="category" class="form-control">
-           <option value="">Prestador</option>
-           <?php 
-           while($row = mysqli_fetch_array($result))
-           {
-            echo '<option value="'.$row["provider_id"].'">'.$row["name_pr"].'</option>';
-          }
-          ?>
-        </select>
-      </th>
+      <th nowrap="nowrap" width="10%"> Prestador</th>
       <th nowrap="nowrap" width="10%"> Marca e Tamanhos</th>
       <th nowrap="nowrap" width="10%"> Data da ordem</th>
       <th nowrap="nowrap" width="10%"> ENTRADA</th>
@@ -151,16 +154,16 @@ $(document).ready(function(){
      autoclose: true
    });
  
- load_data();
+ fetch_data('no');
 
- function load_data(is_date_search, start_date='', end_date='', is_category )
+ function fetch_data(is_date_search, start_date='', end_date='')
  {
   var dataTable = $('#tabela').DataTable({
    "oLanguage": {
 
          "sInfo": "EXIBINDO _START_ DE _END_ - TOTAL: _TOTAL_",
          "sProcessing":   "PESQUISANDO...",
-         "sLengthMenu":   "Mostrar _MENU_ registros",
+         "sLengthMenu":   "Mostrar _MENU_ registros_ ",
          "sZeroRecords":  "Não foram encontrados resultados",
          "sInfoEmpty":    "Mostrando de 0 até 0 de 0 registros",
          "sSearch" : "Pesquisar",
@@ -194,7 +197,7 @@ $(document).ready(function(){
    "ajax":{
     url:"proc_pesq_ordens.php",
     type:"POST",
-    data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date, is_category:is_category
+    data:{is_date_search:is_date_search, start_date:start_date, end_date:end_date
          },
        },
    //initial callback
