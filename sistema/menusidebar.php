@@ -101,25 +101,22 @@
                                                     </a>
                                                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                                                         <li>
-                                                            <a href="button.html">
-                                                                <i class="fas fa-plus-circle"></i>Cadastro</a>
+                                                            <a href="cadastro_tamanho.php">
+                                                                <i class="fas fa-arrows-alt"></i>Tamanhos</a>
                                                             </li>
                                                             <li>
-                                                                <a href="progress-bar.php">
-                                                                    <i class="fas fa-tasks"></i>Lista de Produtos</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="cadastro_tamanho.php">
-                                                                        <i class="fas fa-arrows-alt"></i>Tamanhos</a>
-                                                                    </li>
-                                                                                <li>
-                                                                                    <a href="cadastro_marca.php">
-                                                                                        <i class="fas fa-spinner"></i>Marcas</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                            </aside>
+                                                                <a href="cadastro_marca.php">
+                                                                    <i class="fas fa-spinner"></i>Marcas</a>
+
+                                                                </ul>
+                                                            </li>
+                                                        </li>
+                                                        <li>
+                                                            <a class="js-arrow" href="calculo_tnt.php">
+                                                                <i class="fas fa-desktop"></i>Calculo TNT</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </aside>
 <!-- END MENU SIDEBAR-->
